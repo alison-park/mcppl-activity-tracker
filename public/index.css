@@ -13,7 +13,7 @@ body {
 }
 
 .trackerBox{
-  margin-bottom: 8%;
+  margin-bottom: 30px;
 }
 
 .leaderBox{
@@ -29,7 +29,7 @@ body {
     display: none; /* Hidden by default */
     position: fixed; 
     z-index: 1;
-    padding-top: 100px; 
+    padding-top: 5%; 
     left: 0;
     top: 0;
     width: 100%; 
@@ -82,5 +82,18 @@ body {
     font-size: 20px;
     color: black;
     border: 1px solid #888;
-    padding: 1%;
+    padding: 3%;
+  }
+
+  .table1{
+    text-align: center;
+    margin: auto;
+    font-size: 20px;
+    border-spacing: 15%;
+    padding-bottom: 20px;
+  }
+
+  th, td {
+    padding: 20px;
+    border: solid black ;
   }

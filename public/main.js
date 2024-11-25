@@ -103,9 +103,11 @@ function saveActivity(f1, l1, e1, u1, d1, newS1, ex1) {
 function loadLeaderboard(){
   database.ref("Users/").orderByChild("negsteps").limitToFirst(3).once('value', function(snapshot) {
     content = '';
+    place = 0
     snapshot.forEach(function (data){
         var val = data.val();
                 content +='<tr>';       
+                content += '<td>' + (place+=1)+ '</td>';
                 content += '<td>' + val.eid + '</td>';
                 content += '<td>' + val.steps + '</td>';
                 content += '</tr>';
