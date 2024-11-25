@@ -47,8 +47,9 @@ function checkUserExists(f,l,eid_0,uid_0,d,newS){
       snapshot.forEach(function (childSnapshot) {
         var value = childSnapshot.val();
         if (value.steps!==null){
-          //updateActivity(f,l,eid_0,uid_0,+newS,+value.steps);
-          saveActivity(f,l,eid_0,uid_0,d,+newS, +value.steps);
+          let newPushSteps = (+newS) + (+value.steps);
+          childSnapshot.ref.update({steps: newPushSteps});
+          //saveActivity(f,l,eid_0,uid_0,d,+newS, +value.steps);
         }
       });
     } else {
