@@ -42,14 +42,14 @@ document.getElementById('trackerForm')
   .addEventListener('submit', submitForm);
 
 function checkUserExists(f,l,eid_0,uid_0,d,newS){
-  database.ref("Users/").orderByChild('eid').equalTo(eid_0).once('value', function(snapshot) {
+  database.ref("Users/").child(uid_0).once('value', function(snapshot) {
     if (snapshot.exists()) {
       snapshot.forEach(function (childSnapshot) {
         var value = childSnapshot.val();
         if (value.steps!==null){
           let newPushSteps = (+newS) + (+value.steps);
           childSnapshot.ref.update({steps: newPushSteps});
-          childSnapshot.ref.update({negsteps: newPushSteps*-1});
+          //saveActivity(f,l,eid_0,uid_0,d,+newS, +value.steps);
         }
       });
     } else {
@@ -62,6 +62,7 @@ function checkUserExists(f,l,eid_0,uid_0,d,newS){
 
 function submitForm(e) {
   e.preventDefault();
+
   // Get values
   var fname = getInputVal('fname');
   var lname = getInputVal('lname');
@@ -87,31 +88,32 @@ function getInputVal(id) {
 
 // Save activity log to firebase
 function saveActivity(f1, l1, e1, u1, d1, newS1, ex1) {
-    var newPush = database.ref("Users/").push();
+    var newPush = database.ref("Users/").child(u1).push();
+    var newPostKey = firebase.database().ref("Users/").child(u1).push().key
     newPush.set({
     steps: newS1 +ex1,
     fname: f1,
     lname: l1,
     eid: e1,
     date: d1,
-    negsteps: (newS1+ex1)*-1,
+    key: newPostKey,
   })
 }
 
 
 // Order all participants
 function loadLeaderboard(){
-  database.ref("Users/").orderByChild("negsteps").limitToLast(3).once('value', function(snapshot) {
-    content = '';
-    snapshot.forEach(function (data){
+  database.ref("Users/").once('value', function(snapshot) {
+  snapshot.forEach(function (childSnapshot){
+      content = '';
+      childSnapshot.forEach(function (data){
         var val = data.val();
                 content +='<tr>';       
                 content += '<td>' + val.eid + '</td>';
                 content += '<td>' + val.steps + '</td>';
                 content += '</tr>';
-                console.log(val.steps);
       }); $('#table1').append(content);
-
+    })
   });
   
 }
