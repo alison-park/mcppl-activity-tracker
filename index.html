@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<link href="index.css" type="text/css" rel="stylesheet">
+<title>aly park</title>
+</head>  
+
+<body>
+    <!--
+    <div class="topnav">
+      <a class="active" href="index.html" tabindex="1">Home</a>
+      <a href="#leaderboard" tabindex="2">Leaderboard</a>
+      <a href="images/McPplRules.pdf" tabindex="4" alt="Button to PDF of Rules">Rules</a>
+    </div>
+    -->
+    <div class="main" >
+        <div class="trackerBox">
+            <h1>McPpl H&W Winter Tracker</h1>
+            
+            <div class="container-for-label">
+                <input class="modal-button" type="submit" id="myBtn" value="Log your Activites" alt="Button for Contact Information Modal" tabindex="5"></input>
+            </div>       
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                   <!--<span class="close">&times;</span>--> 
+                    <button class="close" tabindex="6">&times;</button>
+                    <div class="text-modal" alt="Activity Log Modal">
+                        <p>Enter details about your activity </p>
+                        <form action="" method="POST"  id="trackerForm">
+                            
+                            <label for="fname">First Name:</label><br>
+                            <input type="text" id="fname" name="fname" ><br><br>
+                            <label for="lname">Last Name:</label><br>
+                            <input type="text" id="lname" name="lname" ><br><br>
+                            <label for="eid">EID:</label><br>
+                            <input type="text" id="eid" name="eid" ><br><br>
+                            <label for="week">Week Tracked:</label><br>
+                            <select id="week" name="week">
+                                <option value="12-1 to 12-7">12/1-12/7</option>
+                                <option value="12-9 to 12-XX">12/9-12/XX</option>
+                                <option value="12-XX to 1-XX">12/XX-1/XX</option>
+                                <option value="1-XX to 1-XX">1/XX-1/XX</option>
+                            </select> <br><br>
+                            <label for="steps">Steps Walked:</label><br>
+                            <input type="number" id="steps" name="steps" ><br><br>
+                            <input type="submit" name="submit"><br>
+                        </form> 
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+<!---
+        <div class="leaderboard" id="leaderboard">
+            <h1 class="h1" tabindex="7">Leaderboard:</h1>
+            
+        </div>
+
+        <div class="self-stats" id="self">
+            <h1 class="h1" tabindex="7">Look up your stats:</h1>
+            
+        </div>
+-->
+        
+    </div>
+
+    
+    <script src= "https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script src="main.js"></script>
+
+
+    
+    </body>
+    </html>
+    
