@@ -74,7 +74,10 @@ function submitForm(e) {
   //saveActivity(fname, lname, eid, date, newSteps, uid);
   document.getElementById('trackerForm').reset();
   modal.style.display = "none";
-
+  const divElement = document.getElementById("bodyTable"); 
+  divElement.innerHTML = ""; 
+  loadLeaderboard();
+  return uid;
 
 }
 
@@ -98,13 +101,29 @@ function saveActivity(f1, l1, e1, u1, d1, newS1, ex1) {
 }
 
 
-// Update step count in firebase
-function updateActivity(f1,l1,e1,u1,d1,newS1,ex1){
+// Order all participants
+function loadLeaderboard(){
+  let bestScores = {};
+  database.ref("Users/").on('value', function(snapshot) {
+  snapshot.forEach(function (childSnapshot){
+      content = '';
+      childSnapshot.forEach(function (data){
+        bestScores[data.val().eid]=data.val().steps;
+        console.log(data.val().eid);
+        console.log(data.val().steps);
+        var val = data.val();
+                content +='<tr>';       
+                content += '<td>' + val.eid + '</td>';
+                content += '<td>' + val.steps + '</td>';
+                content += '</tr>';
+      }); $('#table1').append(content);
+    })
+  });
   
 }
 
 
-
-
-
-
+window.addEventListener("load", (event) => {
+  loadLeaderboard();
+  console.log("page is fully loaded");
+});
