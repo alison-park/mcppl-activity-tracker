@@ -17,8 +17,8 @@
     -->
     <div class="main" >
         <div class="trackerBox">
-            <h1>McPpl H&W Winter Tracker</h1>
-            
+            <h1>McPpl H&W Winter Step Tracker</h1>
+            <br>
             <div class="container-for-label">
                 <input class="modal-button" type="submit" id="myBtn" value="Log your Activites" alt="Button for Contact Information Modal" tabindex="5"></input>
             </div>       
@@ -37,13 +37,8 @@
                             <input type="text" id="lname" name="lname" ><br><br>
                             <label for="eid">EID:</label><br>
                             <input type="text" id="eid" name="eid" ><br><br>
-                            <label for="week">Week Tracked:</label><br>
-                            <select id="week" name="week">
-                                <option value="12-1 to 12-7">12/1-12/7</option>
-                                <option value="12-9 to 12-XX">12/9-12/XX</option>
-                                <option value="12-XX to 1-XX">12/XX-1/XX</option>
-                                <option value="1-XX to 1-XX">1/XX-1/XX</option>
-                            </select> <br><br>
+                            <label for="week">Date:</label><br>
+                            <input type="date" id="date" name="date"><br><br>
                             <label for="steps">Steps Walked:</label><br>
                             <input type="number" id="steps" name="steps" ><br><br>
                             <input type="submit" name="submit"><br>
@@ -53,12 +48,15 @@
                 
             </div>
         </div>
-<!---
-        <div class="leaderboard" id="leaderboard">
-            <h1 class="h1" tabindex="7">Leaderboard:</h1>
-            
-        </div>
 
+        <div class="leaderBox" id="leaderboard">
+            <h1 class="h1" tabindex="7">Leaderboard:</h1>
+            <p>
+                <ol id ="scorelist">
+                </ol>
+            </p>
+        </div>
+<!---
         <div class="self-stats" id="self">
             <h1 class="h1" tabindex="7">Look up your stats:</h1>
             

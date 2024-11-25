@@ -9,11 +9,16 @@ body {
     text-align: center;
     margin: auto;
     font-family: Arial, Helvetica, sans-serif;  
+
 }
 
 .trackerBox{
+  margin-bottom: 8%;
 }
 
+.leaderBox{
+  border: 2px black solid;
+}
 /* The Modal */
 
 .modal-button{
