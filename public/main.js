@@ -46,10 +46,19 @@ function checkUserExists(f,l,eid_0,uid_0,d,newS){
     if (snapshot.exists()) {
       snapshot.forEach(function (childSnapshot) {
         var value = childSnapshot.val();
+        var date_String = value.date;
         if (value.steps!==null){
-          let newPushSteps = (+newS) + (+value.steps);
-          childSnapshot.ref.update({steps: newPushSteps});
-          childSnapshot.ref.update({negsteps: newPushSteps*-1});
+          if (date_String.includes(d)){
+              console.log("no push to db")
+              alert(`Activity already logged for ${d} date. Enter different date to continue submission.`)
+          }
+          else{
+            let newPushSteps = (+newS) + (+value.steps);
+            childSnapshot.ref.update({steps: newPushSteps});
+            childSnapshot.ref.update({negsteps: newPushSteps*-1});
+            childSnapshot.ref.update({date: value.date+" "+d});
+          }
+          
         }
       });
     } else {
@@ -70,7 +79,6 @@ function submitForm(e) {
   var date = getInputVal('date');
   var newSteps = getInputVal("steps");
   checkUserExists(fname,lname,eid,uid,date,newSteps);
-  //saveActivity(fname, lname, eid, date, newSteps, uid);
   document.getElementById('trackerForm').reset();
   modal.style.display = "none";
   const divElement = document.getElementById("bodyTable"); 
@@ -93,7 +101,7 @@ function saveActivity(f1, l1, e1, u1, d1, newS1, ex1) {
     fname: f1,
     lname: l1,
     eid: e1,
-    date: d1,
+    date:d1,
     negsteps: (newS1+ex1)*-1,
   })
 }
