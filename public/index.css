@@ -19,6 +19,18 @@ body {
 .leaderBox{
   border: 2px black solid;
 }
+
+@media only screen and (max-width: 600px) {
+  .leaderBox{
+  }
+  .table1{
+    border-spacing: 1%;
+    padding-bottom: 10px;
+    overflow-x: auto;
+
+  }
+}
+
 /* The Modal */
 
 .modal-button{
