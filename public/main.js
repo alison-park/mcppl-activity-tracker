@@ -13,7 +13,6 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
 var database = firebase.database();
 
 var modal = document.getElementById("myModal");
@@ -41,28 +40,32 @@ window.onclick = function (event) {
 document.getElementById('trackerForm')
   .addEventListener('submit', submitForm);
 
-function checkUserExists(f,l,eid_0,uid_0,d,newS){
+function checkUserExists(f,l,eid_0,uid_0,d){
   database.ref("Users/").orderByChild('eid').equalTo(eid_0).once('value', function(snapshot) {
     if (snapshot.exists()) {
       snapshot.forEach(function (childSnapshot) {
         var value = childSnapshot.val();
         var date_String = value.date;
-        if (value.steps!==null){
+        if (value.eid!==null){
           if (date_String.includes(d)){
               console.log("no push to db")
               alert(`Activity already logged for ${d} date. Enter different date to continue submission.`)
           }
           else{
-            let newPushSteps = (+newS) + (+value.steps);
-            childSnapshot.ref.update({steps: newPushSteps});
-            childSnapshot.ref.update({negsteps: newPushSteps*-1});
+           // let newPushSteps = (+newS) + (+value.steps);
+           // childSnapshot.ref.update({steps: newPushSteps});
+          //  childSnapshot.ref.update({negsteps: newPushSteps*-1});
+            let newChall = value.challenges +=1;
             childSnapshot.ref.update({date: value.date+" "+d});
+            childSnapshot.ref.update({challenges: newChall});
+            childSnapshot.ref.update({negChallenges: newChall*-1});
           }
           
         }
       });
     } else {
-      saveActivity(f,l,eid_0,uid_0,d,+newS, 0);
+      //saveActivity(f,l,eid_0,uid_0,d,+newS, 0);
+      saveActivity(f,l,eid_0,uid_0,d);
     }
   }).catch((error) => {
     console.error(error);
@@ -77,8 +80,9 @@ function submitForm(e) {
   var eid = getInputVal('eid');
   var uid = eid.replace(/\./g, '-');
   var date = getInputVal('date');
-  var newSteps = getInputVal("steps");
-  checkUserExists(fname,lname,eid,uid,date,newSteps);
+  //var newSteps = getInputVal("steps");
+  //checkUserExists(fname,lname,eid,uid,date,newSteps);
+  checkUserExists(fname,lname,eid,uid,date);
   document.getElementById('trackerForm').reset();
   modal.style.display = "none";
   const divElement = document.getElementById("bodyTable"); 
@@ -94,22 +98,24 @@ function getInputVal(id) {
 }
 
 // Save activity log to firebase
-function saveActivity(f1, l1, e1, u1, d1, newS1, ex1) {
+function saveActivity(f1, l1, e1, u1, d1) {
     var newPush = database.ref("Users/").push();
     newPush.set({
-    steps: newS1 +ex1,
+   // steps: newS1 +ex1,
     fname: f1,
     lname: l1,
     eid: e1,
     date:d1,
-    negsteps: (newS1+ex1)*-1,
+  //  negsteps: (newS1+ex1)*-1,
+    challenges:1,
+    negChallenges:1*-1,
   })
 }
 
 
 // Order all participants
 function loadLeaderboard(){
-  database.ref("Users/").orderByChild("negsteps").limitToFirst(3).once('value', function(snapshot) {
+  database.ref("Users/").orderByChild("negChallenges").limitToFirst(3).once('value', function(snapshot) {
     content = '';
     place = 0
     snapshot.forEach(function (data){
@@ -117,9 +123,9 @@ function loadLeaderboard(){
                 content +='<tr>';       
                 content += '<td>' + (place+=1)+ '</td>';
                 content += '<td>' + val.eid + '</td>';
-                content += '<td>' + val.steps + '</td>';
+                content += '<td>' + val.challenges + '</td>';
                 content += '</tr>';
-                console.log(val.steps);
+                console.log(val.challenges);
       }); $('#table1').append(content);
 
   });
